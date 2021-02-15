@@ -15,6 +15,9 @@ sap.ui.define([
 					return "";
 				}
 				return parseFloat(sValue).toFixed(2);
+			},
+			formatRadioBtn : function(sValue){
+				return sValue !== null ? parseInt(sValue, 10) - 1  : -1;                  
 			}
 
 		};

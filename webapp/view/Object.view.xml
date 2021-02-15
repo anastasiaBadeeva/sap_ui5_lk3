@@ -1,31 +1,69 @@
-<mvc:View
-	controllerName="jetCources.Project.controller.Object"
-	xmlns="sap.m"
-	xmlns:mvc="sap.ui.core.mvc"
-	xmlns:semantic="sap.f.semantic">
-
-	<semantic:SemanticPage
-		id="page"
-		headerPinnable="false"
-		toggleHeaderOnTitleClick="false"
-		busy="{objectView>/busy}"
+<mvc:View controllerName="jetCources.Project.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
+	xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core">
+	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}">
-
 		<semantic:titleHeading>
-			<Title text="{MaterialText}" />
+			<layout:VerticalLayout>
+				<Title text="MaterialText = {MaterialText}, MaterialID = {MaterialID}, IntegrationID = {IntegrationID}"/>
+				<Button tooltip="To worklist" press="onPressBack" icon="sap-icon://nav-back"/>
+			</layout:VerticalLayout>
 		</semantic:titleHeading>
-
-		<semantic:headerContent>
-			<ObjectNumber
-				numberUnit="{Created}"
-			/>
-		</semantic:headerContent>
-
+		<semantic:headerContent></semantic:headerContent>
+		<semantic:content>
+			<List headerText="MaterialText = {MaterialText}, MaterialID = {MaterialID}, IntegtationID = {IntegtationID}">
+				<headerToolbar>
+					<Toolbar>
+						<Button text="Submit changes" press="onPressSubmit" icon="sap-icon://accept" enabled="{objectView>/enableChanges}"/>
+						<Button text="Reset changes" press="onPressReset" icon="sap-icon://reset" enabled="{objectView>/enableChanges}"/>
+						<Button text="Refresh" press="onPressRefresh" icon="sap-icon://refresh"/>
+					</Toolbar>
+				</headerToolbar>
+				<items>
+					<InputListItem label="Enable chabges">
+						<Switch state="false" change="onChangeSwitch"/>
+					</InputListItem>
+					<InputListItem label="MaterialText">
+						<Input width="27%" id="materialTextInp" placeholder="MaterialText" value="{MaterialText}" enabled="{objectView>/enableChanges}"
+							valueLiveUpdate="true" maxLength="20"/>
+					</InputListItem>
+					<InputListItem label="SubGroupText">
+						<Select id="selectedItem" enabled="false" forceSelection="false" selectedKey="{SubGroupID}" valueState="Success"
+							valueStateText="Success value state text" showSecondaryValues="true"
+							items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }">
+							<core:Item key="{SubGroupID}" text="{SubGroupText}"/>
+						</Select>
+					</InputListItem>
+					<InputListItem label="GroupID">
+						<RadioButtonGroup id="radioBtnGroup" columns="5" selectedIndex="{ path: 'GroupID', formatter : '.formatter.formatRadioBtn' }">
+							<RadioButton text="1-Зимняя" enabled="{objectView>/enableChanges}"/>
+							<RadioButton text="2-Летняя" enabled="{objectView>/enableChanges}"/>
+							<RadioButton text="3-Всесезонная" enabled="{objectView>/enableChanges}"/>
+							<RadioButton text="4-Спортивная" enabled="{objectView>/enableChanges}"/>
+							<RadioButton text="5-Для отдыха и дома" enabled="{objectView>/enableChanges}"/>
+						</RadioButtonGroup>
+					</InputListItem>
+					<InputListItem label="GroupText">
+						<Text text="{GroupText}"></Text>
+					</InputListItem>
+					<InputListItem label="CreatedBy">
+						<Text text="{CreatedBy}"></Text>
+					</InputListItem>
+					<InputListItem label="ModifiedBy">
+						<Text text="{ModifiedBy}"></Text>
+					</InputListItem>
+					<InputListItem label="SubGroupID">
+						<Input width="27%" id="subGroupIDInp" placeholder="SubGroupID" value="{SubGroupID}" enabled="{objectView>/enableChanges}"
+							valueLiveUpdate="true" maxLength="20"/>
+					</InputListItem>
+					<InputListItem label="IntegrationID">
+						<Input width="27%" id="integrationIDInp" placeholder="IntegrationID" value="{IntegrationID}" enabled="{objectView>/enableChanges}"
+							valueLiveUpdate="true" maxLength="20"/>
+					</InputListItem>
+				</items>
+			</List>
+		</semantic:content>
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
 		</semantic:sendEmailAction>
-
-
 	</semantic:SemanticPage>
-
 </mvc:View>

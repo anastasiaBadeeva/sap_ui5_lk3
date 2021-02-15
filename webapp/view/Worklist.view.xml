@@ -11,8 +11,9 @@
 					<Toolbar>
 						<Title id="tableHeader" text="{worklistView>/worklistTableTitle}"/>
 						<ToolbarSpacer/>
-						<Button text="Create" press="onPressCreate"/>
-						<Button text="Delete" press="onPressDelete"/>
+						<Button text="Refresh" press="onPressRefresh" icon="sap-icon://refresh"/>
+						<Button text="Create" press="onPressCreate" icon="sap-icon://add"/>
+						<Button text="Delete" press="onPressDelete" icon="sap-icon://delete"/>
 						<Button text="Update" press="onPressUpdate"/>
 						<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto" placeholder="search for SubGroupText"></SearchField>
 						<SearchField placeholder="search for MaterialText" id="searchField2" tooltip="{i18n>worklistSearchTooltip}" search="onSearchMaterialText"

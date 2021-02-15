@@ -65,6 +65,9 @@ sap.ui.define([
 		 * @param {sap.ui.base.Event} oEvent the update finished event
 		 * @public
 		 */
+		 onPressRefresh : function(){
+		 	this.getModel().refresh();
+		 },
 		onUpdateFinished: function(oEvent) {
 			// update the worklist's object counter after the table update
 			var sTitle,
