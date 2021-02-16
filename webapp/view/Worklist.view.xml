@@ -1,10 +1,14 @@
-<mvc:View controllerName="jetCources.Project.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic">
+<mvc:View controllerName="jetCources.Project.controller.Worklist" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
+	xmlns:smartTable="sap.ui.comp.smarttable" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" xmlns:core="sap.ui.core">
 	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false">
 		<semantic:titleHeading>
 			<Title text="{i18n>worklistTitle}"/>
 		</semantic:titleHeading>
 		<semantic:content>
-			<Table id="table" width="auto" items="{ path: '/zjblessons_base_Materials', sorter: { path: 'CreatedBy', descending: false ,group: true} }"
+			<smartTable:SmartTable id="smartTable" entitySet="zjblessons_base_Materials" smartFilterId="smartFilterBar" tableType="ResponsiveTable"
+				editable="false" editTogglable="false"  useExportToExcel="true" beforeExport="onBeforeExport" useVariantManagement="true" useTablePersonalisation="true"
+				header="Materials" showRowCount="true" persistencyKey="pk_MaterialsST" enableAutoBinding="true" beforeRebindTable = "onBeforeRebindTable">
+			<Table id="table" width="auto" 
 				noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true"
 				updateFinished="onUpdateFinished" mode="SingleSelectLeft">
 				<headerToolbar>
@@ -41,28 +45,11 @@
 					</Column>
 				</columns>
 				<items>
-					<ColumnListItem type="Navigation" press="onPress" highlight="{= ${CreatedBy} === 'LAB1000007' ? 'Success' : undefined}">
-						<cells >
-							<ObjectIdentifier title="{CreatedBy}" id="CreatedById"/>
-						</cells>
-						<cells>
-							<ObjectIdentifier title="{MaterialText}"/>
-						</cells>
-						<cells>
-							<ObjectIdentifier title="{ModifiedBy}"/>
-						</cells>
-						<cells>
-							<ObjectIdentifier title="{GroupText}"/>
-						</cells>
-						<cells>
-							<ObjectIdentifier title="{SubGroupText}"/>
-						</cells>
-						<cells>
-							<Text text="{ path: 'Modified', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'HH:mm dd/MM/yyyy' } }"/>
-						</cells>
-					</ColumnListItem>
+				
 				</items>
 			</Table>
+			
+			</smartTable:SmartTable>
 		</semantic:content>
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>
