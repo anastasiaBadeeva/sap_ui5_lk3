@@ -27,11 +27,12 @@
 							valueLiveUpdate="true" maxLength="20"/>
 					</InputListItem>
 					<InputListItem label="SubGroupText">
-						<Select id="selectedItem" enabled="false" forceSelection="false" selectedKey="{SubGroupID}" valueState="Success"
-							valueStateText="Success value state text" showSecondaryValues="true"
-							items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }">
-							<core:Item key="{SubGroupID}" text="{SubGroupText}"/>
-						</Select>
+						<Text text="{SubGroupText}"></Text>
+						<!--<Select id="selectedItem" enabled="false" forceSelection="false" selectedKey="{SubGroupID}" valueState="Success"-->
+						<!--	valueStateText="Success value state text" showSecondaryValues="true"-->
+						<!--	items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }">-->
+						<!--	<core:Item key="{SubGroupID}" text="{SubGroupText}"/>-->
+						<!--</Select>-->
 					</InputListItem>
 					<InputListItem label="GroupID">
 						<RadioButtonGroup id="radioBtnGroup" columns="5" selectedIndex="{ path: 'GroupID', formatter : '.formatter.formatRadioBtn' }">
