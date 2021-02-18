@@ -23,6 +23,30 @@
 	<edmx:DataServices>
 		<Schema xmlns="http://docs.oasis-open.org/odata/ns/edm">
 			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType">
+				<Annotation Term="UI.PresentationVariant">
+					<Record Type="UI.PresentationVariantType">
+						<PropertyValue Property="SortOrder"/>
+						<PropertyValue Property="GroupBy">
+							<Collection/>
+						</PropertyValue>
+						<PropertyValue Property="TotalBy"/>
+						<PropertyValue Property="Total"/>
+						<PropertyValue Property="Visualizations"/>
+						<PropertyValue Property="RequestAtLeast">
+							<Collection>
+								<PropertyPath>MaterialID</PropertyPath>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="UI.SelectionFields">
+					<Collection>
+						<PropertyPath>CreatedBy</PropertyPath>
+						<PropertyPath>GroupText</PropertyPath>
+						<PropertyPath>SubGroupText</PropertyPath>
+						<PropertyPath>MaterialText</PropertyPath>
+					</Collection>
+				</Annotation>
 				<Annotation Term="UI.LineItem">
 					<Collection>
 						<Record Type="UI.DataField">
@@ -44,6 +68,98 @@
 							<PropertyValue Property="Value" Path="MaterialText"/>
 						</Record>
 					</Collection>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/GroupText">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelGroupText}"/>
+				<Annotation Term="Common.ValueListWithFixedValues"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="zjblessons_base_Groups"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="GroupText"/>
+									<PropertyValue Property="ValueListProperty" String="GroupText"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/SubGroupText">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelSubGroupText}"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="zjblessons_base_SubGroups"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="SubGroupText"/>
+									<PropertyValue Property="ValueListProperty" String="SubGroupText"/>
+								</Record>
+								<Record Type="Common.ValueListParameterDisplayOnly">
+									<PropertyValue Property="ValueListProperty" String="Created"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/CreatedBy">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelCreatedBy}"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/GroupID">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelGroupID}"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/MaterialText">
+				<Annotation Term="Common.ValueListWithFixedValues"/>
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="zjblessons_base_Materials"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="MaterialText"/>
+									<PropertyValue Property="ValueListProperty" String="MaterialText"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
+				</Annotation>
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelMaterialText}"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/Modified">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelModified}"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/ModifiedBy">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelModifiedBy}"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/Version">
+				<Annotation Term="UI.Hidden"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/Language">
+				<Annotation Term="UI.Hidden"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/IntegrationID">
+				<Annotation Term="UI.Hidden"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/MaterialID">
+				<Annotation Term="UI.Hidden"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/Created">
+				<Annotation Term="Common.ValueList">
+					<Record Type="Common.ValueListType">
+						<PropertyValue Property="CollectionPath" String="zjblessons_base_HeadersType"/>
+						<PropertyValue Property="Parameters">
+							<Collection>
+								<Record Type="Common.ValueListParameterInOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="Created"/>
+									<PropertyValue Property="ValueListProperty" String="Created"/>
+								</Record>
+							</Collection>
+						</PropertyValue>
+					</Record>
 				</Annotation>
 			</Annotations>
 		</Schema>
