@@ -118,10 +118,10 @@ sap.ui.define([
 		onPressBack: function() {
 			this.getRouter().navTo("worklist");
 		},
-		onChangeSwitch: function(oEvent) {
-			var switchBtn = oEvent.getSource().getState();
-			this.getModel("objectView").setProperty("/enableChanges", switchBtn);
-		},
+		// onChangeSwitch: function(oEvent) {
+		// 	var switchBtn = oEvent.getSource().getState();
+		// 	this.getModel("objectView").setProperty("/enableChanges", switchBtn);
+		// },
 		onPressRefresh: function(oEvent) {
 			this.getModel().refresh();
 		},

@@ -34,9 +34,9 @@
 				<smartTable:customToolbar>
 					<OverflowToolbar design="Transparent">
 						<ToolbarSpacer/>
-						<Button text="Refresh" press="onPressRefresh" icon="sap-icon://refresh"/>
-						<Button text="Create" press="onPressCreate" icon="sap-icon://add"/>
-						<Button text="Delete" press="onPressDelete" icon="sap-icon://delete"/>
+						<Button text="Refresh" press="onPressRefresh" icon="{i18n>iconRefresh}"/>
+						<Button text="Create" press="onPressCreate" icon="{i18n>iconAdd}"/>
+						<Button text="Delete" press="onPressDelete" icon="{i18n>iconDelete}"/>
 						<Button text="Update" press="onPressUpdate"/>
 						<SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search="onSearch" width="auto" placeholder="search for SubGroupText"></SearchField>
 						<SearchField placeholder="search for MaterialText" id="searchField2" tooltip="{i18n>worklistSearchTooltip}" search="onSearchMaterialText"

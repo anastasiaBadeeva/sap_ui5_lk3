@@ -4,36 +4,38 @@
 		busyIndicatorDelay="{objectView>/delay}">
 		<semantic:titleHeading>
 			<layout:VerticalLayout>
-				<Title text="MaterialText = {MaterialText}, MaterialID = {MaterialID}, IntegrationID = {IntegrationID}"/>
-				<Button tooltip="To worklist" press="onPressBack" icon="sap-icon://nav-back"/>
+				<Title text="{i18n>labelMaterialText} = {MaterialText}, {i18n>labelMaterialID} = {MaterialID}, {i18n>labelIntegrationID} = {IntegrationID}"/>
+				<Button tooltip="To worklist" press="onPressBack" icon="{i18n>iconNavBack}"/>
 			</layout:VerticalLayout>
 		</semantic:titleHeading>
 		<semantic:headerContent></semantic:headerContent>
 		<semantic:content>
-			<List headerText="MaterialText = {MaterialText}, MaterialID = {MaterialID}, IntegtationID = {IntegtationID}">
+			<List headerText="{i18n>labelMaterialText} = {MaterialText}, {i18n>labelMaterialID} = {MaterialID}, {i18n>labelIntegrationID} = {IntegtationID}">
 				<headerToolbar>
 					<Toolbar>
-						<Button text="Submit changes" press="onPressSubmit" icon="sap-icon://accept" enabled="{objectView>/enableChanges}"/>
-						<Button text="Reset changes" press="onPressReset" icon="sap-icon://reset" enabled="{objectView>/enableChanges}"/>
-						<Button text="Refresh" press="onPressRefresh" icon="sap-icon://refresh"/>
+						<Button text="{i18n>labelSubmitChanges}" press="onPressSubmit" icon="{i18n>iconAccept}" enabled="{objectView>/enableChanges}"/>
+						<Button text="{i18n>labelResetChanges}" press="onPressReset" icon="{i18n>iconReset}" enabled="{objectView>/enableChanges}"/>
+						<Button text="{i18n>labelRefresh}" press="onPressRefresh" icon="{i18n>iconRefresh}"/>
 					</Toolbar>
 				</headerToolbar>
 				<items>
-					<InputListItem label="Enable chabges">
-						<Switch state="false" change="onChangeSwitch"/>
+					<InputListItem label="{i18n>labelEnableСhabges}">
+						<Switch state="{objectView>/enableChanges}" />
 					</InputListItem>
-					<InputListItem label="MaterialText">
+					<InputListItem label="{i18n>labelMaterialText}">
 						<Input width="27%" id="materialTextInp" placeholder="MaterialText" value="{MaterialText}" enabled="{objectView>/enableChanges}"
 							valueLiveUpdate="true" maxLength="20"/>
 					</InputListItem>
-					<InputListItem label="SubGroupText">
-						<Select id="selectedItem" enabled="false" forceSelection="false" selectedKey="{SubGroupID}" valueState="Success"
+					<InputListItem label="{i18n>labelSubGroupText}">
+						<Select id="selectedItem"  forceSelection="false" selectedKey="{SubGroupID}" valueState="Success"
 							valueStateText="Success value state text" showSecondaryValues="true"
-							items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }">
+							items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }"
+						
+							enabled="{= ${objectView>/enableChanges} &amp;&amp; ${GroupID} > 3 ? true : false}">
 							<core:Item key="{SubGroupID}" text="{SubGroupText}"/>
 						</Select>
 					</InputListItem>
-					<InputListItem label="GroupID">
+					<InputListItem label="{i18n>labelGroupID}">
 						<RadioButtonGroup id="radioBtnGroup" columns="5" selectedIndex="{ path: 'GroupID', formatter : '.formatter.formatRadioBtn' }">
 							<RadioButton text="1-Зимняя" enabled="{objectView>/enableChanges}"/>
 							<RadioButton text="2-Летняя" enabled="{objectView>/enableChanges}"/>
@@ -42,22 +44,25 @@
 							<RadioButton text="5-Для отдыха и дома" enabled="{objectView>/enableChanges}"/>
 						</RadioButtonGroup>
 					</InputListItem>
-					<InputListItem label="GroupText">
+					<InputListItem label="{i18n>labelGroupText}">
 						<Text text="{GroupText}"></Text>
 					</InputListItem>
-					<InputListItem label="CreatedBy">
-						<Text text="{CreatedBy}"></Text>
+					<InputListItem label="{i18n>labelCreatedBy}">
+						<Text text="{parts : ['CreatedBy','Created'], formatter : '.formatter.formatCreated'}"></Text>
 					</InputListItem>
-					<InputListItem label="ModifiedBy">
-						<Text text="{ModifiedBy}"></Text>
+					<InputListItem label="{i18n>labelModifiedBy}">
+						<Text text="{parts : ['ModifiedBy','Modified'], formatter : '.formatter.formatModified'}"></Text>
 					</InputListItem>
-					<InputListItem label="SubGroupID">
+					<InputListItem label="{i18n>labelSubGroupID}">
 						<Input width="27%" id="subGroupIDInp" placeholder="SubGroupID" value="{SubGroupID}" enabled="{objectView>/enableChanges}"
 							valueLiveUpdate="true" maxLength="20"/>
 					</InputListItem>
-					<InputListItem label="IntegrationID">
+					<InputListItem label="{i18n>labelIntegrationID}">
 						<Input width="27%" id="integrationIDInp" placeholder="IntegrationID" value="{IntegrationID}" enabled="{objectView>/enableChanges}"
 							valueLiveUpdate="true" maxLength="20"/>
+					</InputListItem>
+					<InputListItem label="{i18n>labelIntegrationID}">
+					  <Text text="{= ${objectView>/enableChanges}  ? ${i18n>labelEdit} : ${i18n>labelView}}"></Text>
 					</InputListItem>
 				</items>
 			</List>
