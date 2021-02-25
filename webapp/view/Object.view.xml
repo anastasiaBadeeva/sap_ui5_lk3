@@ -1,71 +1,139 @@
 <mvc:View controllerName="jetCources.Project.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.f.semantic"
-	xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core" >
+	xmlns:smartForm="sap.ui.comp.smartform" xmlns:smartField="sap.ui.comp.smartfield" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 	<semantic:SemanticPage id="page" headerPinnable="false" toggleHeaderOnTitleClick="false" busy="{objectView>/busy}"
 		busyIndicatorDelay="{objectView>/delay}">
 		<semantic:titleHeading>
 			<layout:VerticalLayout>
 				<Title text="{i18n>labelMaterialText} = {MaterialText}, {i18n>labelMaterialID} = {MaterialID}, {i18n>labelIntegrationID} = {IntegrationID}"/>
-				<Button tooltip="To worklist" press="onPressBack" icon="{i18n>iconNavBack}"/>
+				<Button tooltip="To worklist" press="onPressBack" icon="{i18n>iconNavBack}" enabled="{=! ${objectView>/enableChanges}}"/>
+				<Button tooltip="Edit" press="onEdit" icon="{i18n>iconEdit}" enabled="{=! ${objectView>/enableChanges}}"
+					visible="{=${objectView>/selectedTab} === 'Form' &amp;&amp; !${objectView>/editChanges} }"/>
+				<Button tooltip="Save" press="onSave" icon="{i18n>iconSave}" enabled="{= ${objectView>/enableChanges}}"
+					visible="{=${objectView>/selectedTab} === 'Form' &amp;&amp; ${objectView>/editChanges} }"/>
+				<Button tooltip="Cancel" press="onCancel" icon="{i18n>iconCancel}" enabled="{= ${objectView>/enableChanges}}"
+					visible="{=${objectView>/selectedTab} === 'Form' &amp;&amp; ${objectView>/editChanges} }"/>
 			</layout:VerticalLayout>
 		</semantic:titleHeading>
 		<semantic:headerContent></semantic:headerContent>
 		<semantic:content>
-			<List headerText="{i18n>labelMaterialText} = {MaterialText}, {i18n>labelMaterialID} = {MaterialID}, {i18n>labelIntegrationID} = {IntegtationID}">
-				<headerToolbar>
-					<Toolbar>
-						<Button text="{i18n>labelSubmitChanges}" press="onPressSubmit" icon="{i18n>iconAccept}" enabled="{objectView>/enableChanges}"/>
-						<Button text="{i18n>labelResetChanges}" press="onPressReset" icon="{i18n>iconReset}" enabled="{objectView>/enableChanges}"/>
-						<Button text="{i18n>labelRefresh}" press="onPressRefresh" icon="{i18n>iconRefresh}"/>
-					</Toolbar>
-				</headerToolbar>
+			<IconTabBar id="idIconTabBar" class="sapUiNoContentPadding" expandable="false" stretchContentHeight="true"
+				selectedKey="{objectView>/selectedTab}">
 				<items>
-					<InputListItem label="{i18n>labelEnableСhabges}">
-						<Switch state="{objectView>/enableChanges}" />
-					</InputListItem>
-					<InputListItem label="{i18n>labelMaterialText}">
-						<Input width="27%" id="materialTextInp" placeholder="MaterialText" value="{MaterialText}" enabled="{objectView>/enableChanges}"
-							valueLiveUpdate="true" maxLength="20"/>
-					</InputListItem>
-					<InputListItem label="{i18n>labelSubGroupText}">
-						<Select id="selectedItem"  forceSelection="false" selectedKey="{SubGroupID}" valueState="Success"
-							valueStateText="Success value state text" showSecondaryValues="true"
-							items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }"
-						
-							enabled="{= ${objectView>/enableChanges} &amp;&amp; ${GroupID} > 3 ? true : false}">
-							<core:Item key="{SubGroupID}" text="{SubGroupText}"/>
-						</Select>
-					</InputListItem>
-					<InputListItem label="{i18n>labelGroupID}">
-						<RadioButtonGroup id="radioBtnGroup" columns="5" selectedIndex="{ path: 'GroupID', formatter : '.formatter.formatRadioBtn' }">
-							<RadioButton text="1-Зимняя" enabled="{objectView>/enableChanges}"/>
-							<RadioButton text="2-Летняя" enabled="{objectView>/enableChanges}"/>
-							<RadioButton text="3-Всесезонная" enabled="{objectView>/enableChanges}"/>
-							<RadioButton text="4-Спортивная" enabled="{objectView>/enableChanges}"/>
-							<RadioButton text="5-Для отдыха и дома" enabled="{objectView>/enableChanges}"/>
-						</RadioButtonGroup>
-					</InputListItem>
-					<InputListItem label="{i18n>labelGroupText}">
-						<Text text="{GroupText}"></Text>
-					</InputListItem>
-					<InputListItem label="{i18n>labelCreatedBy}">
-						<Text text="{parts : ['CreatedBy','Created'], formatter : '.formatter.formatCreated'}"></Text>
-					</InputListItem>
-					<InputListItem label="{i18n>labelModifiedBy}">
-						<Text text="{parts : ['ModifiedBy','Modified'], formatter : '.formatter.formatModified'}"></Text>
-					</InputListItem>
-					<InputListItem label="{i18n>labelSubGroupID}">
-						<Input width="27%" id="subGroupIDInp" placeholder="SubGroupID" value="{SubGroupID}" enabled="{objectView>/enableChanges}"
-							valueLiveUpdate="true" maxLength="20"/>
-					</InputListItem>
-					<InputListItem label="{i18n>labelIntegrationID}">
-						<Input width="27%" id="integrationIDInp" placeholder="IntegrationID" value="{IntegrationID}" enabled="{objectView>/enableChanges}"
-							valueLiveUpdate="true" maxLength="20"/>
-					</InputListItem>
-					<InputListItem label="{i18n>labelIntegrationID}">
-					  <Text text="{= ${objectView>/enableChanges}  ? ${i18n>labelEdit} : ${i18n>labelView}}"></Text>
-					</InputListItem>
+					<IconTabFilter id="listTab" icon="{i18n>iconList}" text="{i18n>tList}" key="List"
+						enabled="{=!${objectView>/enableChanges} || ${objectView>/selectedTab} === 'List'}">
+						<List
+							headerText="{i18n>labelMaterialText} = {MaterialText}, {i18n>labelMaterialID} = {MaterialID}, {i18n>labelIntegrationID} = {IntegtationID}">
+							<headerToolbar>
+								<Toolbar>
+									<Button text="{i18n>labelSubmitChanges}" press="onPressSubmit" icon="{i18n>iconAccept}" enabled="{objectView>/enableChanges}"/>
+									<Button text="{i18n>labelResetChanges}" press="onPressReset" icon="{i18n>iconReset}" enabled="{objectView>/enableChanges}"/>
+									<Button text="{i18n>labelRefresh}" press="onPressRefresh" icon="{i18n>iconRefresh}"/>
+								</Toolbar>
+							</headerToolbar>
+							<items>
+								<InputListItem label="{i18n>labelEnableСhabges}">
+									<Switch state="{objectView>/enableChanges}"/>
+								</InputListItem>
+								<InputListItem label="{i18n>labelMaterialText}">
+									<Input width="27%" id="materialTextInp" placeholder="MaterialText" value="{MaterialText}" enabled="{objectView>/enableChanges}"
+										valueLiveUpdate="true" maxLength="20"/>
+								</InputListItem>
+								<InputListItem label="{i18n>labelSubGroupText}">
+									<Select id="selectedItem" forceSelection="false" selectedKey="{SubGroupID}" valueState="Success" valueStateText="Success value state text"
+										showSecondaryValues="true" items="{ path: '/zjblessons_base_SubGroups', sorter: { path: 'SubGroupID', descending : false} }"
+										enabled="{= ${objectView>/enableChanges} &amp;&amp; ${GroupID} > 3 ? true : false}">
+										<core:Item key="{SubGroupID}" text="{SubGroupText}"/>
+									</Select>
+								</InputListItem>
+								<InputListItem label="{i18n>labelGroupID}">
+									<RadioButtonGroup id="radioBtnGroup" columns="5" selectedIndex="{ path: 'GroupID', formatter : '.formatter.formatRadioBtn' }">
+										<RadioButton text="1-Зимняя" enabled="{objectView>/enableChanges}"/>
+										<RadioButton text="2-Летняя" enabled="{objectView>/enableChanges}"/>
+										<RadioButton text="3-Всесезонная" enabled="{objectView>/enableChanges}"/>
+										<RadioButton text="4-Спортивная" enabled="{objectView>/enableChanges}"/>
+										<RadioButton text="5-Для отдыха и дома" enabled="{objectView>/enableChanges}"/>
+									</RadioButtonGroup>
+								</InputListItem>
+								<InputListItem label="{i18n>labelGroupText}">
+									<Text text="{GroupText}"></Text>
+								</InputListItem>
+								<InputListItem label="{i18n>labelCreatedBy}">
+									<Text text="{parts : ['CreatedBy','Created'], formatter : '.formatter.formatCreated'}"></Text>
+								</InputListItem>
+								<InputListItem label="{i18n>labelModifiedBy}">
+									<Text text="{parts : ['ModifiedBy','Modified'], formatter : '.formatter.formatModified'}"></Text>
+								</InputListItem>
+								<InputListItem label="{i18n>labelSubGroupID}">
+									<Input width="27%" id="subGroupIDInp" placeholder="SubGroupID" value="{SubGroupID}" enabled="{objectView>/enableChanges}"
+										valueLiveUpdate="true" maxLength="20"/>
+								</InputListItem>
+								<InputListItem label="{i18n>labelIntegrationID}">
+									<Input width="27%" id="integrationIDInp" placeholder="IntegrationID" value="{IntegrationID}" enabled="{objectView>/enableChanges}"
+										valueLiveUpdate="true" maxLength="20"/>
+								</InputListItem>
+								<InputListItem label="{i18n>labelState}">
+									<Text text="{= ${objectView>/enableChanges} ? ${i18n>labelEdit} : ${i18n>labelView}}"></Text>
+								</InputListItem>
+							</items>
+						</List>
+					</IconTabFilter >
+					<IconTabFilter id="formTab" icon="{i18n>iconForm}" text="{i18n>fForm}" key="Form"
+						enabled="{=!${objectView>/enableChanges} || ${objectView>/selectedTab} === 'Form'}">
+						<smartForm:SmartForm id="smartForm" useHorizontalLayout="false" editable="{objectView>/editChanges}" editToggled="onEditToggled"
+							editTogglable="{= ${objectView>/editChanges} &amp;&amp; ${objectView>/flag} ? false : true}" title="Form">
+							<smartForm:customToolbar>
+								<OverflowToolbar design="Transparent">
+									<ToolbarSpacer/>
+									<OverflowToolbarButton tooltip="{i18n>labelRefresh}" press="onPressRefresh" icon="{i18n>iconRefresh}"/>
+								</OverflowToolbar>
+							</smartForm:customToolbar>
+							<smartForm:layout>
+								<smartForm:ColumnLayout columnsM="2" columnsL="3" columnsXL="4"/>
+							</smartForm:layout>
+							<smartForm:Group id="main" label="{i18n>tMainInfo}">
+								<smartForm:GroupElement>
+									<!--<ComboBox items="{ path: '/MaterialText', sorter: { path: 'text' } }">-->
+									<!--	<core:Item key="{key}" text="{text}"/>-->
+									<!--</ComboBox>-->
+									<smartField:SmartField value="{MaterialText}" visible="true" mandatory="true" showValueHelp="true"/>
+								</smartForm:GroupElement>
+								<smartForm:GroupElement >
+									<smartField:SmartField value="{MaterialDescription}" app:multiLineSettings="{cols: 60, rows: 4}" mandatory="false"/>
+								</smartForm:GroupElement>
+							</smartForm:Group>
+							<smartForm:Group id="group" label="{i18n>tGroupInfo}">
+								<smartForm:GroupElement>
+									<smartField:SmartField value="{GroupText}" visible="true" mandatory="true" change="onChangeGroup"/>
+									<smartField:SmartField value="{GroupID}" visible="false" mandatory="true"/>
+								</smartForm:GroupElement>
+							</smartForm:Group>
+							<smartForm:Group id="subGroup" label="{i18n>tSubGroupInfo}">
+								<smartForm:GroupElement>
+									<smartField:SmartField value="{SubGroupText}" visible="true" mandatory="true" enabled="true"/>
+									<smartField:SmartField value="{SubGroupID}" visible="false" mandatory="true"/>
+								</smartForm:GroupElement>
+							</smartForm:Group>
+							<smartForm:Group id="creationInfo" label="{i18n>tCreationInfo}">
+								<smartForm:GroupElement>
+									<smartField:SmartField value="{Created}" mandatory="false" visible="true" editable="true"/>
+								</smartForm:GroupElement>
+								<smartForm:GroupElement>
+									<smartField:SmartField value="{CreatedBy}" mandatory="false"/>
+								</smartForm:GroupElement>
+							</smartForm:Group>
+							<smartForm:Group id="modificationInfo" label="{i18n>tModificationInfo}">
+								<smartForm:GroupElement>
+									<smartField:SmartField value="{Modified}" mandatory="false" editable="false"/>
+								</smartForm:GroupElement>
+								<smartForm:GroupElement>
+									<smartField:SmartField value="{ModifiedBy}" mandatory="false"/>
+								</smartForm:GroupElement>
+							</smartForm:Group>
+						</smartForm:SmartForm>
+					</IconTabFilter >
 				</items>
-			</List>
+			</IconTabBar>
 		</semantic:content>
 		<semantic:sendEmailAction>
 			<semantic:SendEmailAction id="shareEmail" press="onShareEmailPress"/>

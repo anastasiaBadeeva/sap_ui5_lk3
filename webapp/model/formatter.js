@@ -34,7 +34,6 @@ sap.ui.define([], function() {
 			today.setHours(0, 0, 0, 0)
 
 			var diff = (+today - +createdOn) / msInDay
-			console.log(diff)
 			return `${this.getModel("i18n").getResourceBundle().getText("labelModifiedBy")} ${newUser} on ${dataFormatted} modified ${diff} days ago`;
 		},
 		formatCreated: function(user, data) {
@@ -45,7 +44,7 @@ sap.ui.define([], function() {
 			if (user !== null && user !== undefined) {
 				var newUser = user.replace(/LAB/g, "");
 			};
-				var today = new Date();
+			var today = new Date();
 			var createdOn = new Date(data);
 			var msInDay = 24 * 60 * 60 * 1000;
 
@@ -53,9 +52,9 @@ sap.ui.define([], function() {
 			today.setHours(0, 0, 0, 0)
 
 			var diff = (+today - +createdOn) / msInDay
-			console.log(diff)
 			return `${this.getModel("i18n").getResourceBundle().getText("labelCreatedBy")} ${newUser} on ${dataFormatted} created ${diff} days ago`;
-		}
+		},
+		
 
 	};
 

@@ -82,6 +82,10 @@
 									<PropertyValue Property="LocalDataProperty" PropertyPath="GroupText"/>
 									<PropertyValue Property="ValueListProperty" String="GroupText"/>
 								</Record>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="GroupID"/>
+									<PropertyValue Property="ValueListProperty" String="GroupID"/>
+								</Record>
 							</Collection>
 						</PropertyValue>
 					</Record>
@@ -97,6 +101,14 @@
 								<Record Type="Common.ValueListParameterInOut">
 									<PropertyValue Property="LocalDataProperty" PropertyPath="SubGroupText"/>
 									<PropertyValue Property="ValueListProperty" String="SubGroupText"/>
+								</Record>
+								<Record Type="Common.ValueListParameterOut">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="SubGroupID"/>
+									<PropertyValue Property="ValueListProperty" String="SubGroupID"/>
+								</Record>
+								<Record Type="Common.ValueListParameterIn">
+									<PropertyValue Property="LocalDataProperty" PropertyPath="GroupID"/>
+									<PropertyValue Property="ValueListProperty" String="GroupID"/>
 								</Record>
 								<Record Type="Common.ValueListParameterDisplayOnly">
 									<PropertyValue Property="ValueListProperty" String="Created"/>
@@ -130,6 +142,7 @@
 				<Annotation Term="Common.Label" String="{@i18n&gt;labelMaterialText}"/>
 			</Annotations>
 			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/Modified">
+				<Annotation Term="Common.IsCalendarDate"/>
 				<Annotation Term="Common.Label" String="{@i18n&gt;labelModified}"/>
 			</Annotations>
 			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/ModifiedBy">
@@ -148,19 +161,12 @@
 				<Annotation Term="UI.Hidden"/>
 			</Annotations>
 			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/Created">
-				<Annotation Term="Common.ValueList">
-					<Record Type="Common.ValueListType">
-						<PropertyValue Property="CollectionPath" String="zjblessons_base_HeadersType"/>
-						<PropertyValue Property="Parameters">
-							<Collection>
-								<Record Type="Common.ValueListParameterInOut">
-									<PropertyValue Property="LocalDataProperty" PropertyPath="Created"/>
-									<PropertyValue Property="ValueListProperty" String="Created"/>
-								</Record>
-							</Collection>
-						</PropertyValue>
-					</Record>
-				</Annotation>
+				<Annotation Term="Common.IsCalendarDate"/>
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelCreated}"/>
+			</Annotations>
+			<Annotations Target="jetCloud.apps.zjblessons.jblesson02.v01.01.zjblessons_base_MaterialsType/MaterialDescription">
+				<Annotation Term="Common.Label" String="{@i18n&gt;labelMaterialDescription}"/>
+				<Annotation Term="UI.MultiLineText"/>
 			</Annotations>
 		</Schema>
 	</edmx:DataServices>

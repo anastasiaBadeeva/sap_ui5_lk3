@@ -3,12 +3,16 @@ sap.ui.define([
 	"jetCources/Project/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
-	"jetCources/Project/model/formatter"
+	"jetCources/Project/model/formatter",
+	"sap/m/MessageToast",
+	"sap/m/MessageBox"
 ], function(
 	BaseController,
 	JSONModel,
 	History,
-	formatter
+	formatter,
+	MessageToast,
+	MessageBox
 ) {
 	"use strict";
 
@@ -25,6 +29,7 @@ sap.ui.define([
 		 * @public
 		 */
 		onInit: function() {
+			
 			// Model used to manipulate control states. The chosen values make sure,
 			// detail page is busy indication immediately so there is no break in
 			// between the busy indication for loading the view's meta data
@@ -32,7 +37,10 @@ sap.ui.define([
 				oViewModel = new JSONModel({
 					busy: true,
 					delay: 0,
-					enableChanges: false
+					enableChanges: false,
+					selectedTab: "List",
+					editChanges: false,
+					flag: false
 				});
 
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
@@ -44,6 +52,8 @@ sap.ui.define([
 				// Restore original busy indicator delay for the object view
 				oViewModel.setProperty("/delay", iOriginalBusyDelay);
 			});
+			// var oModel = new JSONModel(sap.ui.require.toUrl("zjblessons_base_Materials"));
+			// this.getView().setModel(oModel);
 		},
 
 		/* =========================================================== */
@@ -123,7 +133,8 @@ sap.ui.define([
 		// 	this.getModel("objectView").setProperty("/enableChanges", switchBtn);
 		// },
 		onPressRefresh: function(oEvent) {
-			this.getModel().refresh();
+
+			this.getModel().refresh(true);
 		},
 		onPressReset: function(oEvent) {
 			this.getModel().resetChanges();
@@ -139,6 +150,46 @@ sap.ui.define([
 			this.getModel().setProperty(sPath + "SubGroupID", valueSubGroupID);
 			this.getModel().setProperty(sPath + "IntegrationID", valueIntegrationID);
 			this.getModel().submitChanges();
+		},
+		onEditToggled: function(oEvent) {
+			var editableForm = oEvent.getParameter("editable");
+			var that = this;
+			this.getModel("objectView").setProperty("/enableChanges", editableForm);
+			var flag = this.getModel("objectView").getProperty("/flag");
+			if (!editableForm && !flag) {
+				MessageBox.confirm("Save changes?", {
+					title: "Save changes?",
+					initialFocus: sap.m.MessageBox.Action.OK,
+					onClose: function(sButton) {
+						if (sButton === MessageBox.Action.OK) {
+							MessageToast.show("Changes  save");
+							that.getModel().submitChanges();
+						} else if (sButton === MessageBox.Action.CANCEL) {
+							MessageToast.show("Changes didn't save");
+							that.getModel().resetChanges();
+						}
+					}
+				});
+
+			}
+
+		},
+		onSave: function(oEvent) {
+			this.getModel("objectView").setProperty("/flag", false);
+			this.getModel("objectView").setProperty("/editChanges", false);
+		},
+		onCancel: function(oEvent) {
+			this.getModel("objectView").setProperty("/editChanges", false);
+			this.getModel("objectView").setProperty("/flag", false);
+			MessageToast.show("Changes didn't save");
+		},
+		onEdit: function(oEvent) {
+			this.getModel("objectView").setProperty("/editChanges", true);
+			this.getModel("objectView").setProperty("/flag", true);
+		},
+		onChangeGroup: function(oEvent) {
+			var valuedSelected = oEvent.getSource().getValue();
+			MessageToast.show(this.getModel("i18n").getResourceBundle().getText("labelSelected") + " " + valuedSelected);
 		},
 
 		_onBindingChange: function() {
